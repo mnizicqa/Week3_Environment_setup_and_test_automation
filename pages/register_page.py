@@ -14,17 +14,37 @@ class RegisterPage:
         self.password = page.get_by_label("Password")
         self.register_btn = page.get_by_role("button", name="Register")
 
-    def register_user(self,first_name,last_name,date_of_birth,street,postal_code,city,state,country,phone,email,password):
+    def enter_first_name(self,first_name):
         self.first_name.fill(first_name)
+
+    def enter_last_name(self,last_name):
         self.last_name.fill(last_name)
+
+    def enter_date_of_birth(self,date_of_birth):
         self.date_of_birth.fill(date_of_birth)
+
+    def enter_street(self,street):
         self.street.fill(street)
+
+    def enter_postal_code(self,postal_code):
         self.postal_code.fill(postal_code)
+
+    def enter_city(self,city):
         self.city.fill(city)
+
+    def enter_state(self,state):
         self.state.fill(state)
+
+    def select_country(self,country):
         self.country.select_option(country)
+
+    def enter_phone(self,phone):
         self.phone.fill(phone)
+
+    def enter_email(self,email):
         self.email.fill(email)
+
+    def enter_password(self,password):
         self.password.fill(password)
 
     def click_on_register_btn(self):

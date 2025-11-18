@@ -1,12 +1,12 @@
 import pytest
 from playwright.sync_api import Page
 
-from pages_smoke.cart_page import CartPage
-from pages_smoke.home_page import HomePage
-from pages_smoke.login_page import LoginPage
-from pages_smoke.payment_page import PaymentPage
-from pages_smoke.product_page import ProductPage
-from pages_smoke.register_page import RegisterPage
+from pages.cart_page import CartPage
+from pages.home_page import HomePage
+from pages.login_page import LoginPage
+from pages.payment_page import PaymentPage
+from pages.product_page import ProductPage
+from pages.register_page import RegisterPage
 
 @pytest.fixture(scope="session")
 def base_url():

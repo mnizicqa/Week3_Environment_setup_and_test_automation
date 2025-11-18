@@ -16,8 +16,10 @@ class CartPage:
     def click_on_register_account_link(self):
         self.register_account_link.click()
 
-    def login_user_cart(self, email, password):
+    def enter_user_email(self, email):
         self.user_email_cart.fill(email)
+
+    def enter_user_password(self, password):
         self.user_password_cart.fill(password)
 
     def click_on_login_btn_cart(self):
