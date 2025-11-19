@@ -10,8 +10,7 @@ class DictObject(object):
         return json.loads(json.dumps(d), object_hook=DictObject)
 
 #From here we will feed data into our test
-USERS = DictObject.from_dict({
-    'user_credentials': {
+user = DictObject.from_dict({
         'first_name': 'Mario',
         'last_name': 'Nizic',
         'date_of_birth': '1990-09-13',
@@ -21,12 +20,12 @@ USERS = DictObject.from_dict({
         'state': 'Kanton Sarajevo',
         'country': 'BA',
         'phone': '061905161',
-        'email': 'marion02@msn.com',
+        'email': 'marion14@msn.com',
         'password': 'Qatester17!',
         'payment_method': 'credit-card',
         'credit_card_number': '0000-0000-0000-0000',
         'expiration_date': '12/2028',
         'cvv': '123',
         'card_holder_name': 'Mario'
-    }
+
 })

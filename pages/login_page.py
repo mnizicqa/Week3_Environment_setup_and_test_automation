@@ -5,8 +5,10 @@ class LoginPage:
         self.user_password = page.get_by_label("Password *")
         self.login_btn = page.locator("[data-test='login-submit']")
 
-    def login_user(self, email, password):
+    def enter_user_email(self, email):
         self.user_email.fill(email)
+
+    def enter_user_password(self, password):
         self.user_password.fill(password)
 
     def click_on_login_btn(self):

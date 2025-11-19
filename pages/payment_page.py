@@ -10,11 +10,20 @@ class PaymentPage:
         self.username = page.locator("#menu")
         self.my_invoices = page.locator("[data-test='nav-my-invoices']")
 
-    def select_payment_method(self,payment_method,credit_card_number,expiration_date,cvv,card_holder_name ):
+
+    def select_payment_method(self,payment_method):
         self.payment_method.select_option(payment_method)
+
+    def enter_credit_card_number(self,credit_card_number):
         self.credit_card_number.fill(credit_card_number)
+
+    def enter_expiration_date(self,expiration_date):
         self.expiration_date.fill(expiration_date)
+
+    def enter_cvv(self,cvv):
         self.cvv.fill(cvv)
+
+    def enter_card_holder_name(self,card_holder_name):
         self.card_holder_name.fill(card_holder_name)
 
     def click_on_confirm_btn(self):

@@ -1,10 +1,14 @@
 import pytest
 import allure
-from playwright.sync_api import Page
 
+from tests.conftest import cart_page
+from tests.conftest import homepage
+from tests.conftest import product_page
+from tests.conftest import register_page
+from tests.conftest import login_page
+from tests.conftest import payment_page
 from tasks.ui_tasks import Tasks
-from utilities.user_data import USERS
-
+from utilities.user_data import user
 
 @allure.title("Smoke Test Demo Application")
 @allure.description("This is a smoke test for Demo Web Application, which tests basic features like add to cart, register, login, payment method selection, invoice validation.")
@@ -15,24 +19,25 @@ from utilities.user_data import USERS
 @allure.suite("Smoke")
 @allure.testcase("DWA-250")
 @pytest.mark.smoke
-def test_smoke(page: Page):
 
-    Tasks.navigate_to_product_page(page)
+def test_smoke(homepage,product_page,cart_page,register_page,login_page,payment_page):
 
-    Tasks.add_product_to_cart(page)
+    Tasks.navigate_to_product_page(homepage)
 
-    Tasks.navigate_to_registration(page)
+    Tasks.add_product_to_cart(product_page)
 
-    Tasks.complete_registration(page,USERS.user_credentials.first_name,USERS.user_credentials.last_name,USERS.user_credentials.date_of_birth,USERS.user_credentials.street, USERS.user_credentials.postal_code, USERS.user_credentials.city, USERS.user_credentials.state, USERS.user_credentials.country, USERS.user_credentials.phone, USERS.user_credentials.email , USERS.user_credentials.password)
+    Tasks.navigate_to_registration(cart_page)
 
-    Tasks.complete_login(page,USERS.user_credentials.email,USERS.user_credentials.password)
+    Tasks.complete_registration(register_page,user)
 
-    Tasks.navigate_to_cart_login(page)
+    Tasks.complete_login(login_page,user)
 
-    Tasks.complete_cart_login(page, USERS.user_credentials.email, USERS.user_credentials.password)
+    Tasks.navigate_to_cart_login(cart_page)
 
-    Tasks.proceed_to_payment(page)
+    Tasks.complete_cart_login(cart_page,user)
 
-    Tasks.complete_payment(page, USERS.user_credentials.payment_method, USERS.user_credentials.credit_card_number, USERS.user_credentials.expiration_date, USERS.user_credentials.cvv, USERS.user_credentials.card_holder_name)
+    Tasks.proceed_to_payment(cart_page)
 
-    Tasks.check_invoice(page)
+    Tasks.complete_payment(payment_page,user)
+
+    Tasks.check_invoice(payment_page)
