@@ -1,12 +1,6 @@
 import pytest
 import allure
 
-from tests.conftest import cart_page
-from tests.conftest import homepage
-from tests.conftest import product_page
-from tests.conftest import register_page
-from tests.conftest import login_page
-from tests.conftest import payment_page
 from tasks.ui_tasks import Tasks
 from utilities.user_data import user
 
