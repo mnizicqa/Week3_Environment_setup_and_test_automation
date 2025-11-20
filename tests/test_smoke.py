@@ -14,24 +14,24 @@ from utilities.user_data import user
 @allure.testcase("DWA-250")
 @pytest.mark.smoke
 
-def test_smoke(homepage,product_page,cart_page,register_page,login_page,payment_page):
+def test_smoke(page_manager):
 
-    Tasks.navigate_to_product_page(homepage)
+    Tasks.navigate_to_product_page(page_manager)
 
-    Tasks.add_product_to_cart(product_page)
+    Tasks.add_product_to_cart(page_manager)
 
-    Tasks.navigate_to_registration(cart_page)
+    Tasks.navigate_to_registration(page_manager)
 
-    Tasks.complete_registration(register_page,user)
+    Tasks.complete_registration(page_manager,user)
 
-    Tasks.complete_login(login_page,user)
+    Tasks.complete_login(page_manager,user)
 
-    Tasks.navigate_to_cart_login(cart_page)
+    Tasks.navigate_to_cart_login(page_manager)
 
-    Tasks.complete_cart_login(cart_page,user)
+    Tasks.complete_cart_login(page_manager,user)
 
-    Tasks.proceed_to_payment(cart_page)
+    Tasks.proceed_to_payment(page_manager)
 
-    Tasks.complete_payment(payment_page,user)
+    Tasks.complete_payment(page_manager,user)
 
-    Tasks.check_invoice(payment_page)
+    Tasks.check_invoice(page_manager)
