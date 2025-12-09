@@ -20,7 +20,7 @@ user = DictObject.from_dict({
         'state': 'Kanton Sarajevo',
         'country': 'BA',
         'phone': '061905161',
-        'email': 'marion141@msn.com',
+        'email': "marioniz021@gmail.com",
         'password': 'Qatester17!',
         'payment_method_bank': 'bank-transfer',
         'bank_name': 'Raiffeisen',
