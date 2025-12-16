@@ -1,4 +1,5 @@
 import requests
+from test_data.common_data import BASE_URL
 
 header_content_type = "application/json;charset=UTF-8"
 
@@ -11,8 +12,8 @@ cart_id = None
 class APITasks:
 
     @staticmethod
-    def check_product_id(base_url_api):
-        response = requests.get(f"{base_url_api}/products")
+    def check_product_id():
+        response = requests.get(f"{BASE_URL}/products")
         assert response.status_code == 200
         assert response.reason == "OK"
         assert response.elapsed.total_seconds() < time_seconds
@@ -21,11 +22,11 @@ class APITasks:
         product_id = response_body["data"][8]["id"]
         return product_id
 
-    @staticmethod
-    def select_product_and_check_responses(base_url_api):
-        product_id = APITasks.check_product_id(base_url_api)
+
+    def select_product_and_check_responses(self):
+        product_id = self.check_product_id()
         print(f"Product ID: {product_id}")
-        response = requests.get(f"{base_url_api}/products/{product_id}")
+        response = requests.get(f"{BASE_URL}/products/{product_id}")
         assert response.status_code == 200
         assert response.reason == "OK"
         assert response.elapsed.total_seconds() < time_seconds
@@ -37,8 +38,8 @@ class APITasks:
         print(f"Product name: {product_name}")
 
     @staticmethod
-    def check_cart_id(base_url_api):
-        response = requests.post(f"{base_url_api}/carts")
+    def check_cart_id():
+        response = requests.post(f"{BASE_URL}/carts")
         assert response.status_code == 201
         assert response.reason == "Created"
         assert response.elapsed.total_seconds() < time_seconds
@@ -49,11 +50,10 @@ class APITasks:
         assert response_body.get("id") == cart_id
         print(f"Cart ID: {cart_id}")
 
-    @staticmethod
-    def add_product_to_cart_and_check_responses(base_url_api):
-        product_id = APITasks.check_product_id(base_url_api)
+    def add_product_to_cart_and_check_responses(self):
+        product_id = self.check_product_id()
         product_payload = {"product_id":product_id,"quantity":1}
-        response = requests.post(f"{base_url_api}/carts/{cart_id}", json=product_payload)
+        response = requests.post(f"{BASE_URL}/carts/{cart_id}", json=product_payload)
         assert response.status_code == 200
         assert response.reason == "OK"
         assert response.elapsed.total_seconds() < time_seconds
@@ -61,10 +61,9 @@ class APITasks:
         response_body = response.json().get("result")
         print(f"Response: {response_body}")
 
-    @staticmethod
-    def get_cart_details_and_check_responses(base_url_api):
-        product_id = APITasks.check_product_id(base_url_api)
-        response = requests.get(f"{base_url_api}/carts/{cart_id}")
+    def get_cart_details_and_check_responses(self):
+        product_id = self.check_product_id()
+        response = requests.get(f"{BASE_URL}/carts/{cart_id}")
         assert response.status_code == 200
         assert response.reason == "OK"
         assert response.elapsed.total_seconds() < time_seconds
@@ -81,13 +80,13 @@ class APITasks:
         print(f"Cart item quantity: {cart_item_quantity}")
 
     @staticmethod
-    def complete_registration(base_url_api,user):
+    def complete_registration(user):
         register_payload = {"first_name": user.first_name, "last_name": user.last_name,
                             "dob": user.date_of_birth, "phone": user.phone,
                             "email": user.email, "password": user.password,
                             "address": {"street": user.street, "city": user.city, "state": user.state,
                             "country": user.country, "postal_code": user.postal_code}}
-        response = requests.post(f"{base_url_api}/users/register", json=register_payload)
+        response = requests.post(f"{BASE_URL}/users/register", json=register_payload)
         assert response.status_code == 201
         assert response.reason == "Created"
         assert response.elapsed.total_seconds() < time_seconds
@@ -96,9 +95,9 @@ class APITasks:
         print(f"User data info: {response_body}")
 
     @staticmethod
-    def complete_login(base_url_api,user):
+    def complete_login(user):
         login_payload = {"email": user.email, "password": user.password}
-        response = requests.post(f"{base_url_api}/users/login", json=login_payload)
+        response = requests.post(f"{BASE_URL}/users/login", json=login_payload)
         assert response.status_code == 200
         assert response.reason == "OK"
         assert response.elapsed.total_seconds() < time_seconds
@@ -106,11 +105,10 @@ class APITasks:
         token = response.json().get("access_token")
         return token
 
-    @staticmethod
-    def check_user_data(base_url_api,user):
-        token = APITasks.complete_login(base_url_api,user)
+    def check_user_data(self,user):
+        token = self.complete_login(user)
         print(f"User Token: {token}")
-        response = requests.get(f"{base_url_api}/users/me", headers={"Authorization": f"Bearer {token}"})
+        response = requests.get(f"{BASE_URL}/users/me", headers={"Authorization": f"Bearer {token}"})
         assert response.status_code == 200
         assert response.reason == "OK"
         assert response.elapsed.total_seconds() < time_seconds
@@ -126,12 +124,12 @@ class APITasks:
         print(f"First name: {first_name}, Last name: {last_name}, Email: {email}, Address: {address}")
 
     @staticmethod
-    def complete_payment(base_url_api,user):
+    def complete_payment(user):
         payment_payload = {"payment_method": user.payment_method,
                            "payment_details": {"credit_card_number": user.credit_card_number,
                             "expiration_date": user.expiration_date, "cvv": user.cvv,
                             "card_holder_name": user.card_holder_name}}
-        response = requests.post(f"{base_url_api}/payment/check", json= payment_payload)
+        response = requests.post(f"{BASE_URL}/payment/check", json= payment_payload)
         assert response.status_code == 200
         assert response.reason == "OK"
         assert response.elapsed.total_seconds() < time_seconds
@@ -139,15 +137,14 @@ class APITasks:
         response_body = response.json().get("message")
         print(f"Message: {response_body}")
 
-    @staticmethod
-    def create_invoice(base_url_api,user):
-        token = APITasks.complete_login(base_url_api,user)
+    def create_invoice(self,user):
+        token = self.complete_login(user)
         invoices_payload =  {"billing_street": user.street, "billing_city": user.city, "billing_state": user.state,
                              "billing_country": user.country, "billing_postal_code": user.postal_code,
                              "payment_method": user.payment_method,
                              "payment_details": {"credit_card_number": user.credit_card_number, "expiration_date": user.expiration_date,
                                                 "cvv": user.cvv,"card_holder_name": user.card_holder_name}, "cart_id": cart_id}
-        response = requests.post(f"{base_url_api}/invoices", json=invoices_payload, headers={"Authorization": f"Bearer {token}"})
+        response = requests.post(f"{BASE_URL}/invoices", json=invoices_payload, headers={"Authorization": f"Bearer {token}"})
         assert response.status_code == 201
         assert response.reason == "Created"
         assert response.elapsed.total_seconds() < time_seconds
@@ -155,10 +152,9 @@ class APITasks:
         response_body = response.json()
         print(f"Invoice details: {response_body}")
 
-    @staticmethod
-    def check_invoice(base_url_api,user):
-        token = APITasks.complete_login(base_url_api, user)
-        response = requests.get(f"{base_url_api}/invoices", params=params, headers={"Authorization": f"Bearer {token}"})
+    def check_invoice(self,user):
+        token = self.complete_login(user)
+        response = requests.get(f"{BASE_URL}/invoices", params=params, headers={"Authorization": f"Bearer {token}"})
         assert response.status_code == 200
         assert response.reason == "OK"
         assert response.elapsed.total_seconds() < time_seconds
