@@ -5,8 +5,7 @@ params = "page=1"
 time_seconds = 1
 cart_id = None
 class APITasks:
-    @staticmethod
-    def check_product_id():
+    def check_product_id(self):
         response = requests.get(f"{BASE_URL}/products")
         assert response.status_code == 200
         assert response.reason == "OK"
@@ -32,8 +31,7 @@ class APITasks:
         assert response_body.get("name") == product_name
         print(f"{BASE_URL}/products/{product_id} Product name:{product_name}")
         print(f"{BASE_URL}/products/{product_id} Request completed successfully!")
-    @staticmethod
-    def check_cart_id():
+    def check_cart_id(self):
         response = requests.post(f"{BASE_URL}/carts")
         assert response.status_code == 201
         assert response.reason == "Created"
@@ -78,8 +76,7 @@ class APITasks:
         print(f"{BASE_URL}/carts/{cart_id} Cart item product id:{cart_item_product_id}")
         print(f"{BASE_URL}/carts/{cart_id} Cart item quantity:{cart_item_quantity}")
         print(f"{BASE_URL}/carts/{cart_id} Request completed successfully!")
-    @staticmethod
-    def complete_registration(user):
+    def complete_registration(self,user):
         register_payload = {"first_name": user.first_name, "last_name": user.last_name,
                             "dob": user.date_of_birth, "phone": user.phone,
                             "email": user.email, "password": user.password,
@@ -94,8 +91,7 @@ class APITasks:
         response_body = response.json()
         print(f"{BASE_URL}/users/register User data info:{response_body}")
         print(f"{BASE_URL}/users/register Request completed successfully!")
-    @staticmethod
-    def complete_login(user):
+    def complete_login(self, user):
         login_payload = {"email": user.email, "password": user.password}
         print(f"Login payload: {login_payload}")
         response = requests.post(f"{BASE_URL}/users/login", json=login_payload)
@@ -126,8 +122,7 @@ class APITasks:
         assert email == user.email
         print(f"{BASE_URL}/users/me First name:{first_name}, Last name:{last_name}, Email:{email}, Address:{address}")
         print(f"{BASE_URL}/users/me Request completed successfully!")
-    @staticmethod
-    def complete_payment(user):
+    def complete_payment(self,user):
         payment_payload = {"payment_method": user.payment_method,
                            "payment_details": {"credit_card_number": user.credit_card_number,
                             "expiration_date": user.expiration_date, "cvv": user.cvv,
