@@ -70,11 +70,7 @@ To run tests, use the following command
 ```bash
   python -m pytest tests/select_desired_test_file.py
 ```
-If you want to run test with Allure Reporter, run the following command
 
-```bash
-  python -m pytest tests/select_desired_test_file.py --alluredir allure-results
-```
 To use test markers, created in **pytest.ini** file, simply run the command in terminal
 
 ```bash
@@ -87,9 +83,10 @@ To run tests in headless mode, and print test output to the console use the foll
 ```
 ## Generating Reports
 
-To generate reports, run the following command
+To generate reports, go to directory reports and run the command below:
 
 ```bash
+  cd reports
   allure serve allure-results
 ```
 ## Author
